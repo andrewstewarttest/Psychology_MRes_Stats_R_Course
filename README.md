@@ -1,6 +1,6 @@
 # Advanced-Stats-R-Course
-_Andrew.Stewart@manchester.ac.uk_
-@ajstewart_lang
+_Andrew.Stewart@manchester.ac.uk_ <cr>
+_@ajstewart_lang_
 
 Slides for my MRes Stats course
 
