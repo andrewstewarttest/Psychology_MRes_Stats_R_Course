@@ -16,7 +16,7 @@ Lecture 4	General Linear Model - Regression<br>
 Lecture 5	General Linear Model - Regression<br>
 Lecture 6	Consolidation Lab<br>
 Lecture 7	General Linear Model - ANOVA<br>
-Lecture 8	General Linear Model - ANOVA<br><br>
+Lecture 8	General Linear Model - ANOVA<br>
 
 __Semester 2__<br>
 Workshop 1 Linear Mixed Models<br>
