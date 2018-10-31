@@ -8,17 +8,17 @@ Each folder contains the slides for the first half of the 2-hour session, the R 
 
 Happy coding!  Give me a shout if there are any issues...
 
-Semester 1
-Lecture 1	Introduction, Open Science, and Power
-Lecture 2	Introduction to R
-Lecture 3	Data Wrangling and Visualisation
-Lecture 4	General Linear Model - Regression
-Lecture 5	General Linear Model - Regression
-Lecture 6	Consolidation Lab
-Lecture 7	General Linear Model - ANOVA
-Lecture 8	General Linear Model - ANOVA
+__Semester 1__<br>
+Lecture 1	Introduction, Open Science, and Power<br>
+Lecture 2	Introduction to R<br>
+Lecture 3	Data Wrangling and Visualisation<br>
+Lecture 4	General Linear Model - Regression<br>
+Lecture 5	General Linear Model - Regression<br>
+Lecture 6	Consolidation Lab<br>
+Lecture 7	General Linear Model - ANOVA<br>
+Lecture 8	General Linear Model - ANOVA<br><br>
 
-Semester 2
-Workshop 1 Linear Mixed Models
-Workshop 2 Advanced R (incl. data simulation)
-Workshop 3 Hackathon!
+__Semester 2__<br>
+Workshop 1 Linear Mixed Models<br>
+Workshop 2 Advanced R (incl. data simulation)<br>
+Workshop 3 Hackathon!<br>
