@@ -2,7 +2,7 @@
 _Andrew.Stewart@manchester.ac.uk_ <br>
 _@ajstewart_lang_
 
-Slides for my MRes Stats course.  Click on the 'Clone or download' button in the top right to download a zipper version of this repository.
+Slides for my MRes Stats course.  Click on the __'Clone or download'__ button in the top right to download a zipper version of this repository.
 
 Each folder contains the slides in .pdf form for the first half of the 2-hour session, the R script that goes with those slides, and the lab worksheet as for the second half as an .html file.  All data files for the lectures and the lab classes are included.  To view the .html file, you might need to first download it and then open it within your browser - ensure it has .html at the end of the file name when you save it. 
 
