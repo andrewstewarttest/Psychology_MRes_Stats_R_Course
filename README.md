@@ -18,7 +18,7 @@ Lecture 6	Consolidation Lab<br>
 Lecture 7	General Linear Model - ANOVA<br>
 Lecture 8	General Linear Model - ANOVA<br>
 
-__Semester 2__<br>
+__Semester 2__ (coming soon)<br>
 Workshop 1 Linear Mixed Models<br>
 Workshop 2 Advanced R (incl. data simulation)<br>
 Workshop 3 Hackathon!<br>
