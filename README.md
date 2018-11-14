@@ -11,7 +11,7 @@ Happy coding!  Give me a shout if there are any issues...
 __Semester 1__<br>
 Lecture 1	Introduction, Open Science, and Power<br>
 Lecture 2	Introduction to R<br>
-Lecture 3	Data Wrangling and Visualisation<br>
+Lecture 3	Data Wrangling and Visualisation in the Tidyverse<br>
 Lecture 4	General Linear Model - Regression<br>
 Lecture 5	General Linear Model - Regression<br>
 Lecture 6	Consolidation Lab<br>
