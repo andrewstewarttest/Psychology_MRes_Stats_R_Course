@@ -1,4 +1,4 @@
-# Advanced-Stats-R-Course
+# Psychology MRes Stats R Course
 _Andrew.Stewart@manchester.ac.uk_ <br>
 _@ajstewart_lang_
 
