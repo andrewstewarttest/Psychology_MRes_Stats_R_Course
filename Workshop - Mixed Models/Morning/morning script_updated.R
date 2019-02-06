@@ -391,11 +391,26 @@ anova(model.clm.null, model.clm4)
 emmeans(model.clm4, pairwise ~ VideoCondition, adjust = "none")
 
 # Build and examine normality of residuals with data untransformed
-model.full <- lmer(RT ~ Context * Sentence + (1 + Context * Sentence | Subject) + 
-                     (1 + Context * Sentence | Item), data = DV, REML = TRUE)
+model.full <- lmer(RT ~ Context * Sentence + (1 + Context + Sentence | Subject) + 
+                     (1 + Context + Sentence | Item), data = DV, REML = TRUE)
 
+# checking residuals at the model level
 qqnorm(residuals(model.full))
+qqline(residuals(model.full))
 summary(model.full)
+
+# checking residuals at the random effects level
+r_int <- lme4::ranef(model.full)$Subject$`(Intercept)`
+qqnorm(r_int)
+qqline(r_int)
+
+r_slope <- lme4::ranef(model.full)$Subject$Context1
+qqnorm(r_slope)
+qqline(r_slope)
+
+r_slope <- lme4::ranef(model.full)$Subject$Sentence1
+qqnorm(r_slope)
+qqline(r_slope)
 
 # Build and examine normality of residuals with data log transformed 
 model.full <- lmer(log(RT) ~ Context * Sentence + (1 + Context * Sentence | Subject) + 
