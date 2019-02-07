@@ -1,0 +1,172 @@
+---
+title: "Data Wrangling and Visualisation in R Lab Script"
+author: "Andrew Stewart"
+date: "4/10/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+The purpose of this lab is to give you the chance to actually write (and run) a script in R. 
+
+Before you start you might want to create a New Project - called something like "Data viz and data wrangling" to keep everything for this lab organised.  
+
+Remember, the first thing you need to do is to load the tidyverse packages using the library() function.  If this is your first time using the tidyverse packages for R on this computer, you will need to install the packages by typing the following into the console:
+
+install.packages("tidyverse")
+
+Don't forget the quotes!  Once you've installed the tidyverse, you can then load it into your library by running the command in the script - remember, you do that by putting your cursor at the start of the line in the script you want to run and then pressing CMD-RETURN:
+
+library(tidyverse)
+
+Make sure you're writing the commands in the script window and not in the console - the console can't be saved so you don't want to use it for crucial data science work that you need to be able to run and save!
+
+```{r, message=FALSE}
+library(tidyverse)
+```
+
+We are going to use the Star Wars data set that is built into the dplyr package (which is part of the tidyverse set of packages). If you type the name of the dataset you'll see the first 10 rows.
+
+```{r}
+starwars
+```
+
+We could build a scatterplot plotting mass against height. We are also going to add a regression line (i.e., a line that allows us to predict height if we know mass). The shaded area is the 95% confidence interval.
+```{r}
+ggplot(starwars, aes(x = height, y = mass)) + geom_point() + geom_smooth(method = "lm")
+```
+
+We see we have one extreme value. Let's filter that using using the filter() function to include only those entities with a mass < 500.
+
+```{r}
+starwars_filtered <- filter(starwars, mass < 500)
+```
+
+We will then re-do our scatterplot using this filtered dataset which we called starwars_filtered.
+
+```{r}
+ggplot(starwars_filtered, aes(x = height, y = mass)) + geom_point() + geom_smooth(method = "lm")
+```
+
+Let's add some labels and a title.
+
+```{r}
+ggplot(starwars_filtered, aes(x = height, y = mass)) + geom_point() + geom_smooth(method = "lm") + labs(x = "Height (cm)", y = "Mass (kg)", title = "Scatterplot of Mass against Height for entites in the Star Wars dataset")
+```
+
+We could add some colour and group by species...
+
+```{r}
+ggplot(starwars_filtered, aes(x = height, y = mass, colour = species)) + geom_point() + labs(x = "Height (cm)", y = "Mass (kg)", title = "Scatterplot of Mass against Height for entites\nin the Star Wars dataset")
+```
+
+Now we are going to select a subset of Star Wars data and create a new dataframe with the variables labelled "name", "homeworld", and "species". Type the following commands into you script and run them line by line to see what happens...
+
+Remember to add white space between different sections of your script - this makes reading it later much easier.
+
+```{r}
+swdata <- select(starwars, "name", "height", "homeworld", "species")
+swdata
+```
+
+Now let's select just Humans and cases where we do not have missing Height values.  We are going to use the %>% operator which pipes the dataframe called "swdata"" along the pipe to the filter functions.  The first filter allows through only those cases in the data set where species is eaual to "Human" - note the use of == which means "is equal to". The output of this filter is then passed along to another filter which allows only those cases where there is no missing data for the "height" variable.  In R, NA means "not available".  We are using the negation operator ! which means we have an expression which effectively means Not "not available" - aka the data is present for that variable. 
+
+We are mapping the output of the above operation onto a new variable we are calling "swdata_human"
+
+```{r}
+swdata_human <- swdata %>% filter(species == "Human") %>% filter(!is.na(height))
+```
+
+If you want to have a look at what's stored in this variable, you can just type "swdata_human".
+
+```{r}
+swdata_human
+```
+
+How many humans do we have?  We use the function count() to tell us.
+
+```{r}
+count(swdata_human)
+```
+
+We can get summary data of the humans in our Star Wars dataset using the summarise() function. To find out more about the summarise() function you could type ?summarise into the console window. 
+
+Note, as well as working out the mean, the minimum and the maximum for our variable "height" there are other useful functions we can use.
+
+```{r}
+summarise(swdata_human, Mean = mean(height), Min = min(height), Max = max(height), sd = sd(height))
+```
+
+We are next going to summarise the entire star wars data, removing missing data points and map this onto a new data frame called 'mydata'.
+
+We are going to generate summary data as before, but this time it is preceded by the group_by() function.  This groups our data by "species" so that the summarise function applies for each type of species.  We have some missing data in our data frame so will use a variation of the summarise() function called summarise_at().  This allows to remove missing data by using na.rm=TRUE.  We are calculating the mean, the median, the min and the max for our "height" variable. Note that the syntax is a little different from the summary() function.
+
+```{r}
+mydata <- starwars %>% group_by(species) %>% summarise_at("height", c(Mean = mean, Median = median, Min = min, Max = max, sd = sd), na.rm = TRUE)
+mydata
+```
+
+Why is the standard deviation missing from some species types?
+
+We're now going to create our first graph using a subest of our Star Wars data. We are filtering the dataset so that it contains only Humans and Droids. We are mapping this new filtered dataset onto a new variable I'm calling 'sw_fitered'.
+
+The first line filters the data "starwars" such that it contains only Human and Droid species.  Remember, the operator | means OR.  So, we're effectively filtering the starwars dataset to include only cases where the species is equal to "Human" OR the species is equal to "Droid".
+
+```{r}
+sw_filtered <- filter(starwars, ((species == "Human" | species == "Droid")))
+sw_filtered <- filter(sw_filtered, !is.na(height))
+```
+
+We can use the summarise() function as before, again with the group_by() function to generate some descriptives for our Human and Droids separately.  Note, this time we are also asking for a count of each species type using the funciton n().
+
+```{r}
+sw_filtered %>% group_by(species) %>% summarise(number = n(), mean = mean(height), sd = sd(height))
+```
+
+We are now going to build a violin plot of the Heights of our Droids and Humans. The width of the violin at any point on the y-axis corresponds to the data density at that point.
+
+The ggplot code looks a little complicated, but it's pretty straightforward.  The first bit of code "ggplot (sw_filtered, aes(x = species, y = height, fill = species))" sets up the first layer of our plot by using the sw_filtered dataset, setting up the aesthetics of the plot such that we have "species" on the x-axis, "height" on the y-axis, and we're asking for the graphical elements to be coloured by "species". 
+
+The second layer adds a violin geom "geom_violin()" element. 
+
+The third layer "geom_jitter(alpha = 0.2, width = .05)" adds a jittered point that is slightly transparent - you can vary this by changing the alpha parameter.  Play around with this and the width parameter to see what happens...
+
+The fourth layer "stat_summary (fun.data = "mean_cl_boot", colour = "black", size = 1, alpha = .8)" adds some summary data while the next three layers :
+
+"ggtitle (label = "Plot of Heights of Droids and \nHumans in the Star Wars \nData Set") + labs(x = "Species Type", y = "Height in centimetres") + theme(legend.position = "none")"
+
+Add text to the title, to the axes and turns off the fill legend - delete this last layer to see what happens...
+
+```{r}
+ggplot (sw_filtered, aes(x = species, y = height, fill=species)) + geom_violin() + 
+  geom_jitter(alpha = 0.2, width = .05) +
+  stat_summary (fun.data = "mean_cl_boot", colour="black", size = 1, alpha = .8) + 
+  ggtitle (label = "Plot of Heights of Droids and \nHumans in the Star Wars \nData Set") + 
+  labs (x = "Species Type", y = "Height in centimetres") + theme(legend.position = "none") 
+```
+
+Now let's just focus on Humans. We're using the filter function. Note that this time we're taking a dataset sw_filtered, filtering it to include only Humans and then mapping it back onto itself.  The variable sw_filtered now reflects only the most recent filter applied to it (i.e., we've lost the droids...but that's ok as these weren't the droids we were looking for....)
+
+```{r}
+sw_filtered <- filter(sw_filtered , species == "Human")
+```
+
+We're going to plot a histogram of the Human heights using our new sw_filtered dataset.  Note we don't need to supply an aesthetic for the y-axis as the geom_histogram we are using will plot the count number for each instance of "height" on the y-axis.  Change the binwidth to see what happens.
+
+```{r}
+ggplot (sw_filtered, aes (x = height)) + geom_histogram(binwidth = 10) + 
+  ggtitle (label = "Histogram of Mass of Humans in the Star Wars Data Set") + 
+  labs (x = "Height (cm)", y = "Count") + theme(legend.position = "none") 
+```
+
+Now we're going to plot a scatterplot of Height against Mass for our Humans and add a regression line. We do that using the "geom_smooth(method = "lm")" layer.
+
+```{r}
+ggplot (sw_filtered, aes(x = mass, y = height)) + geom_point() + geom_smooth(method = "lm") +
+  ggtitle (label = "Plot of Height against \nMass for Humans in the Star Wars \nData Set") + 
+  labs (x = "Mass (kg)", y = "Height (cm)") + theme(legend.position = "none") 
+```
+
+Now, can you create the same plots for Droids in our dataset just as you did for Humans?
