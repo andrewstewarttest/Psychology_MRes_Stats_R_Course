@@ -77,7 +77,7 @@ qqnorm(residuals(model1))
 OK, so these don't look too normal.  We now have a couple of options - we could log transform our DV... 
 
 ```{r}
-model2 <- lmer(log(RT) ~ Condition + (1 + Condition | Subject) + (1 + Condition| Item), data = data, REML = TRUE)
+model2 <- lmer(log(RT) ~ Condition + (1 | Subject) + (1 | Item), data = data, REML = TRUE)
 summary(model2)
 ```
 
@@ -128,7 +128,7 @@ data %>%
 Let's build our model.
 
 ```{r}
-model <- lmer(RT ~ Image + (1 + Image| Subject) + (1 + Image| Item), data = data, REML = TRUE)
+model <- lmer(RT ~ Image + (1 | Subject) + (1 | Item), data = data, REML = TRUE)
 summary(model)
 ```
 
@@ -141,7 +141,7 @@ qqnorm(residuals(model))
 OK, maybe we should log transform the data:
 
 ```{r}
-model <- lmer(log(RT) ~ Image + (1 + Image | Subject) + (1 + Image | Item), data = data, REML = TRUE)
+model <- lmer(log(RT) ~ Image + (1 | Subject) + (1 | Item), data = data, REML = TRUE)
 summary(model)
 qqnorm(residuals(model))
 ```
