@@ -20,5 +20,5 @@ Lecture 8	General Linear Model - ANOVA<br>
 
 __Semester 2__<br>
 Workshop - Mixed Models<br>
-Workshop - Advanced R<br>
+Workshop - Advanced R (content to be added by March 18th)<br>
 Workshop - Hackathon!<br>
