@@ -21,4 +21,5 @@ Lecture 8	General Linear Model - ANOVA<br>
 __Semester 2__<br>
 Workshop - Mixed Models<br>
 Workshop - Advanced R<br>
-Workshop - Hackathon!<br>
+Workshop - Hackathon! (be to added by April 2nd)<br> 
+Workshop - Using Binder for Reproducible Computational Environments (to be added by May 6th)<br>
