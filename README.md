@@ -13,8 +13,8 @@ __Semester 1__<br>
 [Lecture 2	Introduction to R](http://ajstewartlang.github.io/MRes_slides/Lecture_2/index.html)<br>
 [Lecture 3	Data Wrangling and Visualisation in the Tidyverse](http://ajstewartlang.github.io/MRes_slides/Lecture_3/index.html)<br>
 [Lecture 4	General Linear Model - Regression](http://ajstewartlang.github.io/MRes_slides/Lecture_4/index.html)<br>
-[Lecture 5	General Linear Model - Regression]<br>(http://ajstewartlang.github.io/MRes_slides/Lecture_5/index.html)
-Lecture 6	Consolidation Lab<br>
+[Lecture 5	General Linear Model - Regression]<br>(http://ajstewartlang.github.io/MRes_slides/Lecture_5/index.html)<br>
+Lecture 6	Consolidation Lab
 [Lecture 7	General Linear Model - ANOVA](http://ajstewartlang.github.io/MRes_slides/Lecture_7/index.html)<br>
 [Lecture 8	General Linear Model - ANOVA](http://ajstewartlang.github.io/MRes_slides/Lecture_8/index.html)<br>
 
