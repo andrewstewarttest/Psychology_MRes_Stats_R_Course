@@ -9,7 +9,7 @@ Each folder contains the slides in .pdf form for the first half of each session,
 Happy coding!  Give me a shout if there are any issues...
 
 __Semester 1__<br>
-[Lecture 1	Introduction, Open Science, and Power[(http://ajstewartlang.github.io/MRes_slides/Lecture_1/index.html)<br>
+[Lecture 1	Introduction, Open Science, and Power](http://ajstewartlang.github.io/MRes_slides/Lecture_1/index.html)<br>
 Lecture 2	Introduction to R<br>
 Lecture 3	Data Wrangling and Visualisation in the Tidyverse<br>
 Lecture 4	General Linear Model - Regression<br>
