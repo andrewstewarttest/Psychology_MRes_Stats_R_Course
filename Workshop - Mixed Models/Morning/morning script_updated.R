@@ -4,6 +4,8 @@ library(emmeans) # allows us to run pairwise comparisons/contrsasts
 library(tidyverse) # load the tidyverse packages
 library(ordinal) # needed for CLMM - cumulative link mixed models for ordinal data
 
+# NOTE- NEED TO UPDATE AS SOME LMMS SINGULAR FIT (OVER PARAMETERISED)
+
 # Linear model
 subject <- seq(1:8)
 gender <- c(rep("male",4), rep("female",4))
@@ -335,7 +337,7 @@ data_agg <- DV %>%
 data_agg$SE <- data_agg$sd/sqrt(60)
 
 # Not used
-#ggplot(data_agg, aes(x=Context:Sentence, y=mean, fill=Context:Sentence)) + geom_col() + 
+# ggplot(data_agg, aes(x=Context:Sentence, y=mean, fill=Context:Sentence)) + geom_col() + 
 #  geom_errorbar(aes(ymin=mean-SE, ymax=mean+SE, width=.5)) + guides(fill=FALSE)
 
 ggplot(data_agg, aes(x = Context, y = mean, group = Sentence, colour = Sentence)) + 
@@ -417,6 +419,7 @@ model.full <- lmer(log(RT) ~ Context * Sentence + (1 + Context * Sentence | Subj
                      (1 + Context * Sentence | Item), data = DV, REML = TRUE)
 
 qqnorm(residuals(model.full))
+qqline(residuals(model.full))
 summary(model.full)
 
 # Build and examine normality of residuals with GLMM under the Gamma distribution - 
