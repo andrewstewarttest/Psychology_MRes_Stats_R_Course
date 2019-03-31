@@ -5,7 +5,7 @@ library(yarrr) # For pirateplots
 library(emmeans) # Needed for pairwise comparisons
 
 # Mixed ANOVA with one between participants factor, and two repeated
-# First create the data - excuse my use of for loops...
+# First create the data 
 set.seed(1234)
 x1 <- rnorm(n = 16, mean = 750, sd = 25) #ppy
 x2 <- rnorm(n = 16, mean = 850, sd = 30) #pny
@@ -22,65 +22,15 @@ x6 <- (1:128)
 x7 <- x6
 x8 <- x6
 
-data <- as.integer(c (x1,x2,x3,x4, x1o, x2o, x3o, x4o))
+data <- as.integer(c(x1,x2,x3,x4, x1o, x2o, x3o, x4o))
 data <- cbind(x5, x6, x7, x8, data)
 data <- as.data.frame(data)
 
-for (i in 1:32) {
-  data$x6[i] = "Pos"
-}
+data$x6 <- rep(c(rep("Pos", 32), rep("Neg", 32)), 2)
 
-for (i in 33:64) {
-  data$x6[i] = "Neg"
-}
+data$x7 <- rep(c(rep("Pos", 16), rep("Neg", 16), rep("Pos", 16), rep("Neg", 16)), 2)
 
-for (i in 1:16) {
-  data$x7[i] = "Pos"
-}
-
-for (i in 17:32) {
-  data$x7[i] = "Neg"
-}
-
-for (i in 33:48) {
-  data$x7[i] = "Pos"
-}
-
-for (i in 49:64) {
-  data$x7[i] = "Neg"
-}
-
-for (i in 1:64) {
-  data$x8[i] = "Young"
-}
-
-for (i in 65:128) {
-  data$x8[i] = "Old"
-}
-
-for (i in 65:96) {
-  data$x6[i] = "Pos"
-}
-
-for (i in 97:128) {
-  data$x6[i] = "Neg"
-}
-
-for (i in 65:80) {
-  data$x7[i] = "Pos"
-}
-
-for (i in 81:96) {
-  data$x7[i] = "Neg"
-}
-
-for (i in 97:112) {
-  data$x7[i] = "Pos"
-}
-
-for (i in 113:128) {
-  data$x7[i] = "Neg"
-}
+data$x8 <- c(rep("Young", 64), rep("Old", 64))
 
 colnames(data) <- c("Participant", "Image", "Word", "Age", "RT")
 
@@ -89,10 +39,12 @@ data$Word <- factor(data$Word, levels = c("Pos", "Neg"))
 data$Age <- factor(data$Age, levels = c("Young", "Old"))
 
 ggplot(data, aes(x = Word:Image, y = RT, colour = Word:Image)) + 
-  geom_violin() + geom_jitter(width = .1, alpha = .2) + 
+  geom_violin() + 
+  geom_jitter(width = .1, alpha = .2) + 
   stat_summary(fun.data = "mean_cl_boot") +
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
-  facet_wrap(~Age) + guides(colour = FALSE)
+  facet_wrap(~ Age) + 
+  guides(colour = FALSE)
 
 pirateplot (formula = RT ~ Word + Image + Age, data = data , theme = 0, # Start from scratch
             inf.f.o = .7, # Band opacity
@@ -105,7 +57,7 @@ pirateplot (formula = RT ~ Word + Image + Age, data = data , theme = 0, # Start 
             gl.lwd = c(.5, 0),
             ylim = c(600,1100))
 
-describeBy(data$RT, group = list (data$Word, data$Image, data$Age))
+describeBy(data$RT, group = list(data$Word, data$Image, data$Age))
 
 model <- aov_4(RT ~ Word * Image * Age + (1 + Word * Image | Participant), data)
 summary(model)
@@ -141,7 +93,8 @@ describeBy(cond$Gaming, group = cond$Condition)
 ggplot(cond, aes(x = Gaming, y = Ability,  colour = Condition)) + geom_point() 
 
 # Separately by Condition
-ggplot(cond, aes(x = Gaming, y = Ability,  colour = Condition)) + geom_point() + 
+ggplot(cond, aes(x = Gaming, y = Ability,  colour = Condition)) + 
+  geom_point() + 
   facet_wrap(~ Condition) + geom_smooth(method = 'lm')
 
 # Run the ANOVA (i.e., without the covariate)- model is significant
@@ -169,9 +122,12 @@ describeBy(cond$Ability, group = cond$Condition)
 emmeans(model_ancova, pairwise~Condition, adjust = "none")
 
 # ANCOVA as a special case of Regression 
-ggplot(cond, aes(x = Condition, y = Ability, colour = Condition)) + geom_violin() + 
-  geom_jitter(width = .1, alpha = .5) + stat_summary(fun.data = "mean_cl_boot") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) + guides(colour = FALSE)
+ggplot(cond, aes(x = Condition, y = Ability, colour = Condition)) + 
+  geom_violin() + 
+  geom_jitter(width = .1, alpha = .5) + 
+  stat_summary(fun.data = "mean_cl_boot") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) + 
+  guides(colour = FALSE)
 
 # Set up the Water level as the reference level and check the contrasts
 cond$Condition <- relevel(cond$Condition, ref = 3)
