@@ -1,4 +1,4 @@
-# The 2019/20 version of this course can be found here:
+# The updated 2019/20 version of this unit can be found here:
 # https://github.com/ajstewartlang/MRes_Advanced_Data_Skills
 
 # Psychology MRes Stats R Course 2018
