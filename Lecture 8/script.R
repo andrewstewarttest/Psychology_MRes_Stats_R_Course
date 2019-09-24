@@ -82,41 +82,33 @@ anova(model_old)
 emmeans(model_old, pairwise ~ Word * Image, adjust = "Bonferroni")
 
 #ANCOVA
-cond <- read_csv("cond.csv")
+cond <- read_csv("https://bit.ly/2Miza73")
 cond$Condition <- as.factor(cond$Condition)
 
-ggplot(cond, aes(x = Gaming, y = Ability,  colour = Condition)) + geom_point() 
-
-describeBy(cond$Ability, group = cond$Condition)
-describeBy(cond$Gaming, group = cond$Condition)
-
-ggplot(cond, aes(x = Gaming, y = Ability,  colour = Condition)) + geom_point() 
+ggplot(cond, aes(x = Gaming, y = Ability,  colour = Condition)) + 
+  geom_point() 
 
 # Separately by Condition
 ggplot(cond, aes(x = Gaming, y = Ability,  colour = Condition)) + 
   geom_point() + 
-  facet_wrap(~ Condition) + geom_smooth(method = 'lm')
+  facet_wrap(~ Condition) + 
+  geom_smooth(method = 'lm') +
+  guides(colour = FALSE)
 
 # Run the ANOVA (i.e., without the covariate)- model is significant
-model <- aov(Ability ~ Condition, data = cond)
-anova(model)
-
 model1 <- aov_4(Ability ~ Condition + (1 | Participant), data = cond)
 anova(model1)
 
 # Run the ANCOVA - when we add the effect of Gaming Frequency first,
-# the model is now not significant
-# First with aov() which uses Type 1 Sums of Squares
-model_ancova <- aov(Ability ~ Gaming + Condition, data = cond)
-anova(model_ancova)
-
-# Now with aov_4() which uses Type 3 Sums of Squares 
+# Condition is now not significant
 cond$Gaming <- scale(cond$Gaming)
 model_ancova <- aov_4(Ability ~ Gaming + Condition + (1 | Participant), data = cond, factorize = FALSE)
 anova(model_ancova)
 
 # Unadjusted means
-describeBy(cond$Ability, group = cond$Condition)
+cond %>%
+  group_by(Condition) %>%
+  summarise(mean_ability = mean(Ability), sd_ability = sd(Ability))
 
 # Report adjusted means
 emmeans(model_ancova, pairwise~Condition, adjust = "none")
